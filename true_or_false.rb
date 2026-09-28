@@ -19,7 +19,7 @@ class TrueOrFalse < Question
     answer == reply
   end
 
-  def ask
+  def get_reply
     puts "#{prompt} (sant/falskt)"
     gets.chomp
   end

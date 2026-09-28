@@ -19,6 +19,8 @@ db.execute('INSERT INTO questions (type, prompt, answer, alternatives) VALUES ("
 db.execute('INSERT INTO questions (type, prompt, answer, alternatives) VALUES ("Multi", "När släpptes ruby 1.2?", "1998", "1997, 1998, 1999")')
 db.execute('INSERT INTO questions (type, prompt, answer, alternatives) VALUES ("TrueOrFalse", "Året är 2026", "true", "")')
 db.execute('INSERT INTO questions (type, prompt, answer, alternatives) VALUES ("TrueOrFalse", "Året är 2025", "false", "")')
+db.execute('INSERT INTO questions (type, prompt, answer, alternatives) VALUES ("Numeric", "15+3", "18", "")')
+db.execute('INSERT INTO questions (type, prompt, answer, alternatives) VALUES ("SelfGraded", "Förklara inkapsling med en mening.", "Objektet bestämmer själv vad som går att nå utifrån.", "")')
 
 
 puts "✅ Databasen är seedad!"

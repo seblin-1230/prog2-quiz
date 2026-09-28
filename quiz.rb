@@ -1,6 +1,8 @@
 require_relative "question"
 require_relative "multiple_choice"
 require_relative "true_or_false"
+require_relative "numeric_question"
+require_relative "self_graded"
 require 'sqlite3'
 
 
@@ -20,6 +22,10 @@ class Quiz
         MultipleChoice.new(res["prompt"], alternatives, res["answer"])
       elsif res["type"] == "TrueOrFalse"
         TrueOrFalse.new(res["prompt"], res["answer"].downcase == "true")
+      elsif res["type"] == "Numeric"
+        NumericQuestion.new(res["prompt"], res["answer"].to_f)
+      elsif res["type"] = "SelfGraded"
+        SelfGraded.new(res["prompt"], res["answer"])
       end
     end
 
@@ -30,20 +36,8 @@ class Quiz
     score = 0
 
     questions.each do |q|
-      reply = q.ask
-      if q.correct?(reply)
-        puts "Rätt!"
+      if q.ask
         score += 1
-      else
-        puts "Fel. Hint: #{q.hint}"
-
-        reply = q.ask
-        if q.correct?(reply)
-          puts "Rätt!"
-          score += 1
-        else
-          puts "Fel. Rätt svar: #{q.answer}"
-        end
       end
     end
 
@@ -58,6 +52,8 @@ end
 #   MultipleChoice.new("När släpptes ruby 1.2", ["1997", "1998", "1999"], "1998"),
 #   TrueOrFalse.new("Året är 2026", true),
 #   TrueOrFalse.new("Året är 2025", false),
+#   NumericQuestion.new("15+3", 18),
+#   SelfGraded.new("Förklara inkapsling med en mening.", "Objektet bestämmer själv vad som går att nå utifrån.")
 # ]
 
 quiz = Quiz.new("quiz.db")

@@ -16,22 +16,24 @@ class MultipleChoice < Question
   end
 
   def correct?(reply)
-    raise ArgumentError unless reply.is_a?(Integer)
-    raise ArgumentError if reply > @alternatives.length
-    raise ArgumentError if reply < 0
+    raise ArgumentError if reply.empty?
 
-    alternatives[reply] == answer
+    int_reply = Integer(reply) - 1
+
+    raise ArgumentError if int_reply > @alternatives.length
+    raise ArgumentError if int_reply < 0
+
+    alternatives[int_reply] == answer
   end
 
-  def ask 
+  def get_reply
     puts prompt
 
     alternatives.each_with_index do |alternative, i|
       puts "#{i+1}: #{alternative}"
     end
 
-    reply = gets.chomp
-    Integer(reply) - 1
+    gets.chomp
   end
 
   def hint
